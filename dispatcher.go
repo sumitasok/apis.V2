@@ -11,6 +11,8 @@ import (
 type D struct {
 	c *context
 
+	actions []action
+
 	mgoClone *mgo.Session
 	rw       *http.ResponseWriter
 	req      *http.Request
