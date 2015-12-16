@@ -107,3 +107,15 @@ func TestGetSetAddRoute(t *testing.T) {
 
 	assert.True(true)
 }
+
+func BenchmarkAttachRouter(b *testing.B) {
+	c := Init()
+	for i := 0; i < b.N; i++ {
+		r := &route{context: c, method: "GET", url: fmt.Sprintf("/url%s", strconv.Itoa(i)), actions: []action{DummyAction{}}}
+		c.addRoute(r)
+	}
+
+	for i := 0; i < 1; i++ {
+		c.attachRoutes()
+	}
+}
