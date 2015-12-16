@@ -1,10 +1,12 @@
 package apis
 
 import (
+	"bytes"
 	"errors"
 	"io/ioutil"
 	"net/http"
 
+	"encoding/gob"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"gopkg.in/mgo.v2"
@@ -17,6 +19,7 @@ type D struct {
 	actions []action
 
 	req       http.Request
+	body      []byte
 	urlParams httprouter.Params
 }
 
@@ -37,6 +40,17 @@ func (d *D) DbQuery(dbQuery func(DB, error)) {
 }
 
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	var resp interface{}
+	var err error
+	var status int
+
+	for _, action := range d.actions {
+		resp, err, status = action.Call(&d)
+	}
+
+	d.LogInfo(resp, err, status)
+
+	return
 }
 
 func (d *D) URLParam(key string) string {
@@ -64,8 +78,23 @@ func (d *D) Body(i interface{}) error {
 
 	return err
 }
+func (d *D) SetBody(i interface{}) error {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(i)
+	if err != nil {
+		return err
+	}
+
+	d.body = buf.Bytes()
+	return nil
+}
 
 func (d *D) reqToByteArray() ([]byte, error) {
+	if len(d.body) > 0 {
+		return d.body, nil
+	}
+
 	body, err := ioutil.ReadAll(d.req.Body)
 	if err != nil {
 		return nil, err
