@@ -46,11 +46,38 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 
 	for _, action := range d.actions {
 		resp, err, status = action.Call(&d)
+		if err != nil {
+			d.Write(rw, resp, err, status)
+			return
+		}
+		err = d.SetBody(resp)
+		if err != nil {
+			d.Write(rw, nil, err, 400)
+			return
+		}
 	}
 
-	d.LogInfo(resp, err, status)
-
+	d.Write(rw, resp, err, status)
 	return
+}
+
+func (d *D) Write(rw http.ResponseWriter, resp interface{}, err error, status int) {
+	var response map[string]interface{}
+	response["data"] = resp
+	response["status"] = status
+
+	if err != nil {
+		response["error"] = err.Error()
+	}
+
+	jData, jsonErr := json.Marshal(response)
+	if jsonErr != nil {
+		d.LogError("Json Marshalling failed", response)
+	}
+
+	rw.Header().Set("Content-Type", "application/json; charset=utf-8")
+	rw.WriteHeader(status)
+	rw.Write(jData)
 }
 
 func (d *D) URLParam(key string) string {
