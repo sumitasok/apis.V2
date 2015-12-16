@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
 
@@ -20,19 +21,19 @@ type D struct {
 
 type DB *mgo.Session
 
-// func (d *D) GetMgoSession() *mgo.Session {
-// 	if d.c.mgo == nil {
-// 		d.LogInfo("Mongo DB not initiated")
-// 		return nil
-// 	}
+func (d *D) DbQuery(dbQuery func(DB, error)) {
+	if d.c.mgo == nil {
+		d.LogInfo("Mongo DB not initiated")
+		dbQuery(nil, errors.New("DB not initiated"))
+		return
+	}
 
-// 	if d.mgoClone != nil {
-// 		return d.mgoClone
-// 	}
+	mgoClone := d.c.mgo.Clone()
+	defer mgoClone.Close()
 
-// 	d.mgoClone = d.c.mgo.Clone()
-// 	return d.mgoClone
-// }
+	dbQuery(mgoClone, nil)
+	return
+}
 
 func (d D) Call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
 }
