@@ -31,6 +31,14 @@ func BenchmarkContextNewDispatcher(b *testing.B) {
 
 type DummyAction struct{}
 
+func (d DummyAction) Config() *Config {
+	return &Config{}
+}
+
+func (d DummyAction) Call(dispatcher *D) (interface{}, error, int) {
+	return nil, nil, 200
+}
+
 func TestRoute(t *testing.T) {
 	assert := assert.New(t)
 

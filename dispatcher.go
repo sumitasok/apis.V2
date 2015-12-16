@@ -32,11 +32,7 @@ func (d *D) GetMgoSession() *mgo.Session {
 	return d.mgoClone
 }
 
-func (d *D) Call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
-
-	if d.mgoClone != nil {
-		d.mgoClone.Close()
-	}
+func (d D) Call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
 }
 
 func (d *D) LogTrace(trace ...interface{}) {

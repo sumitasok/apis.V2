@@ -58,8 +58,6 @@ func (c *C) Listen(port int) {
 	http.ListenAndServe(":"+strconv.Itoa(port), c.router)
 }
 
-type action interface{}
-
 func (c *C) Get(url string) *route {
 	return &route{context: c, method: "GET", url: url}
 }
