@@ -87,7 +87,7 @@ func BenchmarkHttpRouter(b *testing.B) {
 	b.ResetTimer()
 
 	for _, url := range urls {
-		router.GET(url, dispatcher.Call)
+		router.GET(url, dispatcher.call)
 	}
 }
 

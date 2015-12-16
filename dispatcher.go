@@ -35,7 +35,7 @@ func (d *D) DbQuery(dbQuery func(DB, error)) {
 	return
 }
 
-func (d D) Call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
 }
 
 func (d *D) Body(i interface{}) error {

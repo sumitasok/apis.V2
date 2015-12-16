@@ -52,16 +52,16 @@ func (c *context) attachRoutes() {
 		d := D{c: c, actions: _routes[i].actions}
 		switch _routes[i].method {
 		case "GET":
-			c.router.GET(_routes[i].url, d.Call)
+			c.router.GET(_routes[i].url, d.call)
 			break
 		case "POST":
-			c.router.POST(_routes[i].url, d.Call)
+			c.router.POST(_routes[i].url, d.call)
 			break
 		case "PUT":
-			c.router.PUT(_routes[i].url, d.Call)
+			c.router.PUT(_routes[i].url, d.call)
 			break
 		case "DELETE":
-			c.router.DELETE(_routes[i].url, d.Call)
+			c.router.DELETE(_routes[i].url, d.call)
 			break
 		default:
 			break
