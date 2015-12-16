@@ -45,8 +45,10 @@ func (c *C) SetLogger() *C {
 }
 
 func (c *C) Listen(port int) {
+	// Routes
 	c.attachRoutes()
 
+	// Mongo DB
 	if c.mgo != nil {
 		defer c.mgo.Close()
 	}

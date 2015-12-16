@@ -19,6 +19,11 @@ type D struct {
 }
 
 func (d *D) GetMgoSession() *mgo.Session {
+	if d.c.mgo == nil {
+		d.LogInfo("Mongo DB not initiated")
+		return nil
+	}
+
 	if d.mgoClone != nil {
 		return d.mgoClone
 	}
