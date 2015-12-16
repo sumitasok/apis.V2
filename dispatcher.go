@@ -16,7 +16,8 @@ type D struct {
 
 	actions []action
 
-	req http.Request
+	req       http.Request
+	urlParams httprouter.Params
 }
 
 type DB *mgo.Session
@@ -36,6 +37,10 @@ func (d *D) DbQuery(dbQuery func(DB, error)) {
 }
 
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+}
+
+func (d *D) URLParam(key string) string {
+	d.urlParams.ByName(key)
 }
 
 func (d *D) Body(i interface{}) error {

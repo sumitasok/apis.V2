@@ -69,6 +69,7 @@ func (c *context) attachRoutes() {
 	}
 }
 
+// http://www.goinggo.net/2013/11/using-log-package-in-go.html
 func (c *context) setLog() {
 	c.traceLog = log.New(os.Stdout,
 		"TRACE: ",
