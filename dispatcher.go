@@ -40,7 +40,15 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 }
 
 func (d *D) URLParam(key string) string {
-	d.urlParams.ByName(key)
+	return d.urlParams.ByName(key)
+}
+
+func (d *D) QueryParam(key string) string {
+	return d.req.URL.Query().Get(key)
+}
+
+func (d *D) Request() http.Request {
+	return d.req
 }
 
 func (d *D) Body(i interface{}) error {
