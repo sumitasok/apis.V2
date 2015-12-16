@@ -119,3 +119,15 @@ func BenchmarkAttachRouter(b *testing.B) {
 		c.attachRoutes()
 	}
 }
+
+func Example_C_Listen(t *testing.T) {
+	assert := assert.New(t)
+
+	c := Init()
+
+	c.Get("/url").Set(DummyAction{})
+
+	c.Listen(7000)
+
+	assert.True(true)
+}

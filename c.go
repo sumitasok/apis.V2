@@ -3,6 +3,9 @@ package apis
 import (
 	"fmt"
 	"os"
+
+	"net/http"
+	"strconv"
 )
 
 func Init() *C {
@@ -39,6 +42,18 @@ func (c *C) SetLogger() *C {
 	c.setLog()
 
 	return c
+}
+
+func (c *C) Listen(port int) {
+	c.attachRoutes()
+
+	if c.mgo != nil {
+		defer c.mgo.Close()
+	}
+
+	c.infoLog.Println("Application Started at", strconv.Itoa(port))
+
+	http.ListenAndServe(":"+strconv.Itoa(port), c.router)
 }
 
 type action interface{}
