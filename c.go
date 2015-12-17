@@ -10,7 +10,7 @@ import (
 
 func Init() *C {
 	c := &C{&context{}}
-	c.SetLogger()
+	c.setLogger()
 
 	c.routes = &routes{}
 
@@ -38,7 +38,7 @@ func (c *C) SetMgo(addr string) *C {
 	return c
 }
 
-func (c *C) SetLogger() *C {
+func (c *C) setLogger() *C {
 	c.setLog()
 
 	return c

@@ -25,21 +25,23 @@ type D struct {
 
 type DB *mgo.Session
 
-func (d *D) DbQuery(dbQuery func(DB, error)) {
+func (d *D) DbQuery(dbQuery func(DB, error) error) error {
 	if d.c.mgo == nil {
 		d.LogInfo("Mongo DB not initiated")
-		dbQuery(nil, errors.New("DB not initiated"))
-		return
+		return dbQuery(nil, errors.New("DB not initiated"))
 	}
 
 	mgoClone := d.c.mgo.Clone()
 	defer mgoClone.Close()
 
-	dbQuery(mgoClone, nil)
-	return
+	return dbQuery(mgoClone, nil)
 }
 
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	req.Close = true
+
+	d.urlParams = params
+
 	var resp interface{}
 	var err error
 	var status int
@@ -62,8 +64,9 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 }
 
 func (d *D) Write(rw http.ResponseWriter, resp interface{}, err error, status int) {
-	var response map[string]interface{}
-	response["data"] = resp
+	response := map[string]interface{}{
+		"data": resp,
+	}
 	response["status"] = status
 
 	if err != nil {
