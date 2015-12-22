@@ -45,9 +45,10 @@ func TestNestedNameSpaceRoute(t *testing.T) {
 	c.NameSpace("/sales", DummyAction{Index: 1}).Serve(func(ns *NameSpace) {
 		ns.Get("").Set(DummyAction{Index: 2})
 		ns.NameSpace("/reports", DummyAction{Index: 2}).Serve(func(ns1 *NameSpace) {
-			ns1.Get("").Set(DummyAction{Index: 3})
+			ns1.Put("").Set(DummyAction{Index: 3})
 			ns1.NameSpace("/reports", DummyAction{Index: 3}).Serve(func(ns2 *NameSpace) {
-				r = ns2.Get("").Set(DummyAction{Index: 4})
+				r = ns2.Post("").Set(DummyAction{Index: 4})
+				ns2.Delete("").Set(DummyAction{Index: 4})
 			}, DummyAction{Index: 5})
 		}, DummyAction{Index: 6})
 	}, DummyAction{Index: 7})
@@ -57,7 +58,7 @@ func TestNestedNameSpaceRoute(t *testing.T) {
 		DummyAction{Index: 1}, DummyAction{Index: 2}, DummyAction{Index: 3}, DummyAction{Index: 4}, DummyAction{Index: 5}, DummyAction{Index: 6}, DummyAction{Index: 7},
 	})
 
-	assert.Len(*c.routes, 3)
+	assert.Len(*c.routes, 4)
 
 	assert.True(true)
 }
