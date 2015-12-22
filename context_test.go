@@ -29,7 +29,9 @@ func BenchmarkContextNewDispatcher(b *testing.B) {
 	}
 }
 
-type DummyAction struct{}
+type DummyAction struct {
+	Index int
+}
 
 func (d DummyAction) Config() *Config {
 	return &Config{}

@@ -34,7 +34,9 @@ func (d *D) DbQuery(dbQuery func(DB, error) error) error {
 	mgoClone := d.c.mgo.Clone()
 	defer mgoClone.Close()
 
-	return dbQuery(mgoClone, nil)
+	err := dbQuery(mgoClone, nil)
+
+	return err
 }
 
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
@@ -109,6 +111,10 @@ func (d *D) Body(i interface{}) error {
 	return err
 }
 func (d *D) SetBody(i interface{}) error {
+	if i == nil {
+		return nil
+	}
+
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(i)
