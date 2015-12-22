@@ -44,9 +44,9 @@ func TestNestedNameSpaceRoute(t *testing.T) {
 	r := &route{}
 	c.NS("/sales", DummyAction{Index: 1}).Serve(func(ns *NS) {
 		ns.Get("").Set(DummyAction{Index: 2})
-		ns.NameSpace("/reports", DummyAction{Index: 2}).Serve(func(ns1 *NS) {
+		ns.NS("/reports", DummyAction{Index: 2}).Serve(func(ns1 *NS) {
 			ns1.Put("").Set(DummyAction{Index: 3})
-			ns1.NameSpace("/reports", DummyAction{Index: 3}).Serve(func(ns2 *NS) {
+			ns1.NS("/reports", DummyAction{Index: 3}).Serve(func(ns2 *NS) {
 				r = ns2.Post("").Set(DummyAction{Index: 4})
 				ns2.Delete("").Set(DummyAction{Index: 4})
 			}, DummyAction{Index: 5})
@@ -71,8 +71,8 @@ func BenchmarkNestedNameSpace(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		c.NS("/sales", DummyAction{Index: 1}).Serve(func(ns *NS) {
-			ns.NameSpace("/reports", DummyAction{Index: 2}).Serve(func(ns1 *NS) {
-				ns1.NameSpace("/events", DummyAction{Index: 3}).Serve(func(ns2 *NS) {
+			ns.NS("/reports", DummyAction{Index: 2}).Serve(func(ns1 *NS) {
+				ns1.NS("/events", DummyAction{Index: 3}).Serve(func(ns2 *NS) {
 					ns2.Get("").Set(DummyAction{Index: 4})
 				}, DummyAction{Index: 5})
 			}, DummyAction{Index: 6})

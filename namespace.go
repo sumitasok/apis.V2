@@ -54,7 +54,7 @@ func (n *NS) Delete(url string) *route {
 	return &route{context: n.c, method: "DELETE", url: n.prefix + url, bCtrl: n.bCtrl, aCtrl: n.aCtrl}
 }
 
-func (n NS) NameSpace(prefix string, beforeControllers ...action) *NS {
+func (n NS) NS(prefix string, beforeControllers ...action) *NS {
 	if len(n.bCtrl) > 0 {
 		for i := range beforeControllers {
 			n.bCtrl = append(n.bCtrl, beforeControllers[i])
