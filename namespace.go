@@ -50,7 +50,7 @@ func (n *NS) Post(url string) *route {
 func (n *NS) Put(url string) *route {
 	return &route{context: n.c, method: "PUT", url: n.prefix + url, bCtrl: n.bCtrl, aCtrl: n.aCtrl}
 }
-func (n *NS) Delete(url string) *route {
+func (n *NS) Del(url string) *route {
 	return &route{context: n.c, method: "DELETE", url: n.prefix + url, bCtrl: n.bCtrl, aCtrl: n.aCtrl}
 }
 

@@ -70,6 +70,6 @@ func (c *C) Put(url string) *route {
 	return &route{context: c, method: "PUT", url: url}
 }
 
-func (c *C) Delete(url string) *route {
+func (c *C) Del(url string) *route {
 	return &route{context: c, method: "DELETE", url: url}
 }

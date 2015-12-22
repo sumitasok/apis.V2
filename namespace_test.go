@@ -48,7 +48,7 @@ func TestNestedNameSpaceRoute(t *testing.T) {
 			ns1.Put("").Set(DummyAction{Index: 3})
 			ns1.NS("/reports", DummyAction{Index: 3}).Serve(func(ns2 *NS) {
 				r = ns2.Post("").Set(DummyAction{Index: 4})
-				ns2.Delete("").Set(DummyAction{Index: 4})
+				ns2.Del("").Set(DummyAction{Index: 4})
 			}, DummyAction{Index: 5})
 		}, DummyAction{Index: 6})
 	}, DummyAction{Index: 7})
