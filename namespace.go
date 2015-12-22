@@ -17,6 +17,16 @@ func (c *C) NameSpace(prefix string, beforeControllers ...action) *NS {
 	return ns
 }
 
+func (c *C) NS(prefix string, beforeControllers ...action) *NS {
+	ns := &NS{
+		c:      c,
+		prefix: prefix,
+		bCtrl:  beforeControllers,
+	}
+
+	return ns
+}
+
 func (n *NS) Serve(dispatchers func(*NS), afterControllers ...action) *NS {
 	if len(n.aCtrl) > 0 { // inherited from previous namespace
 		for i := range n.aCtrl {
