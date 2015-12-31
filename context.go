@@ -16,6 +16,8 @@ type context struct {
 	warningLog *log.Logger
 	errorLog   *log.Logger
 
+	appConfig *Config
+
 	routes *routes
 	router *httprouter.Router
 }
