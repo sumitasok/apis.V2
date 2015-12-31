@@ -2,6 +2,7 @@ package apis
 
 import (
 	"github.com/bitly/go-simplejson"
+	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -11,6 +12,14 @@ const (
 )
 
 func (c *C) ConfigFile(filepath string) *C {
+
+	data, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		os.Exit(ExitConfigError)
+	}
+
+	c.ConfigBytes(data)
+
 	return c
 }
 
