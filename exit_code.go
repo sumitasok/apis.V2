@@ -1,5 +1,5 @@
 package apis
 
 const (
-	ExitConfigError = 400
+	ExitConfigError = 2
 )

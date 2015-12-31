@@ -3,6 +3,7 @@ package apis
 import (
 	"github.com/bitly/go-simplejson"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -10,6 +11,17 @@ import (
 const (
 	ConfigPathSeperator = "."
 )
+
+func (c *C) ConfigHttpResp(resp *http.Response, err error) *C {
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		os.Exit(ExitConfigError)
+	}
+
+	c.ConfigBytes(data)
+
+	return c
+}
 
 func (c *C) ConfigFile(filepath string) *C {
 
