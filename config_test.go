@@ -9,7 +9,7 @@ func TestConfigInit(t *testing.T) {
 	assert := assert.New(t)
 
 	c := Init()
-	c.ConfigBytes([]byte(`{"apis": {"dev": {"name": "Sumit", "dob": {"month": "nov"}}}}`))
+	c.ConfigBytes([]byte(`{"apis": {"dev": {"name": "Sumit", "dob": {"month": "nov", "date": 26}}}}`))
 
 	_, ok := c.context.appConfig.data.CheckGet("apis")
 
@@ -38,6 +38,10 @@ func TestConfigInit(t *testing.T) {
 	val = c.context.appConfig.String("dob.year", "1987")
 
 	assert.Equal("1987", val)
+
+	valDate := c.context.appConfig.Int64("dob.date", 25)
+
+	assert.Equal(26, valDate)
 
 	assert.True(true)
 }

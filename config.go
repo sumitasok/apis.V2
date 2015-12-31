@@ -42,19 +42,59 @@ type Config struct {
 }
 
 func (c *Config) Array(path string, fallback []interface{}) []interface{} {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Array()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Bool(path string, fallback bool) bool {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Bool()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Bytes(path string, fallback []byte) []byte {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Bytes()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Float(path string, fallback float64) float64 {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Float64()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) String(path string, fallback string) string {
@@ -96,25 +136,81 @@ func nextConfigNode(keys []string, node *simplejson.Json) (*simplejson.Json, boo
 }
 
 func (c *Config) Int(path string, fallback int) int {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Int()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Int64(path string, fallback int64) int64 {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Int64()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Interface(path string, fallback interface{}) interface{} {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val := node.Interface()
+	return val
 }
 
 func (c *Config) Map(path string, fallback map[string]interface{}) map[string]interface{} {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Map()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) StringArray(path string, fallback []string) []string {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.StringArray()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
 
 func (c *Config) Uint64(path string, fallback uint64) uint64 {
-	return fallback
+	node, ok := lastConfigNode(path, *c.data)
+	if !ok {
+		return fallback
+	}
+
+	val, err := node.Uint64()
+	if err != nil {
+		return fallback
+	}
+
+	return val
 }
