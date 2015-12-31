@@ -12,7 +12,16 @@ const (
 	ConfigPathSeperator = "."
 )
 
+func (c *C) Config() *Config {
+	return c.context.appConfig
+}
+
 func (c *C) ConfigHttpResp(resp *http.Response, err error) *C {
+	if err != nil {
+		c.infoLog.Fatal(err)
+		return c
+	}
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		os.Exit(ExitConfigError)

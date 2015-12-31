@@ -1,9 +1,24 @@
 package apis
 
 import (
+	"fmt"
 	assert "github.com/stretchr/testify/assert"
+	"net/http"
 	"testing"
 )
+
+func ExampleConfig() {
+	c := Init()
+
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", "http://localhost:7007/config", nil)
+
+	c.ConfigHttpResp(client.Do(req)).Root("data", "sales", "dev")
+
+	fmt.Println(c.Config().String("payment_url", ""))
+	fmt.Println(c.Config().String("db_tables.order_db", ""))
+	// Output
+}
 
 func TestConfigInit(t *testing.T) {
 	assert := assert.New(t)
