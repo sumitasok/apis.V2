@@ -18,7 +18,7 @@ type D struct {
 
 	actions []action
 
-	req       http.Request
+	req       *http.Request
 	body      []byte
 	urlParams httprouter.Params
 }
@@ -43,6 +43,7 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 	req.Close = true
 
 	d.urlParams = params
+	d.req = req
 
 	var resp interface{}
 	var err error
@@ -93,7 +94,7 @@ func (d *D) QueryParam(key string) string {
 	return d.req.URL.Query().Get(key)
 }
 
-func (d *D) Request() http.Request {
+func (d *D) Request() *http.Request {
 	return d.req
 }
 
