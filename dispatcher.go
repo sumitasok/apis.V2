@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"encoding/gob"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"gopkg.in/mgo.v2"
@@ -21,6 +20,10 @@ type D struct {
 	req       *http.Request
 	body      []byte
 	urlParams httprouter.Params
+}
+
+func (d *D) BodyByte() []byte {
+	return d.body
 }
 
 type DB *mgo.Session
@@ -55,9 +58,10 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 			d.Write(rw, resp, err, status)
 			return
 		}
-		err = d.SetBody(resp)
+
+		err = d.SetBody(resp) // if response is not nil, set it to resquest Body.
 		if err != nil {
-			d.Write(rw, nil, err, 400)
+			d.Write(rw, nil, err, status)
 			return
 		}
 	}
@@ -112,12 +116,13 @@ func (d *D) Body(i interface{}) error {
 	return err
 }
 func (d *D) SetBody(i interface{}) error {
+	// if response is nil, keeep the previous response intact.
 	if i == nil {
 		return nil
 	}
 
 	var buf bytes.Buffer
-	enc := gob.NewEncoder(&buf)
+	enc := json.NewEncoder(&buf)
 	err := enc.Encode(i)
 	if err != nil {
 		return err
