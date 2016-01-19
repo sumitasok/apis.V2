@@ -3,6 +3,7 @@ package apis
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -17,6 +18,7 @@ type D struct {
 
 	actions []action
 
+	RW        http.ResponseWriter
 	req       *http.Request
 	body      []byte
 	urlParams httprouter.Params
@@ -45,8 +47,11 @@ func (d *D) DbQuery(dbQuery func(DB, error) error) error {
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
 	req.Close = true
 
+	d.LogInfo("request in apis")
+
 	d.urlParams = params
 	d.req = req
+	d.RW = rw
 
 	var resp interface{}
 	var err error
@@ -85,6 +90,7 @@ func (d *D) Write(rw http.ResponseWriter, resp interface{}, err error, status in
 		d.LogError("Json Marshalling failed", response)
 	}
 
+	fmt.Println("as")
 	rw.Header().Set("Content-Type", "application/json; charset=utf-8")
 	rw.WriteHeader(status)
 	rw.Write(jData)
