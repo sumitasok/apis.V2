@@ -54,6 +54,10 @@ func (n *NS) Del(url string) *route {
 	return &route{context: n.c, method: "DELETE", url: n.prefix + url, bCtrl: n.bCtrl, aCtrl: n.aCtrl}
 }
 
+func (n *NS) Options(url string) *route {
+	return &route{context: n.c, method: "OPTIONS", url: n.prefix + url, bCtrl: n.bCtrl, aCtrl: n.aCtrl}
+}
+
 func (n NS) NS(prefix string, beforeControllers ...action) *NS {
 	if len(n.bCtrl) > 0 {
 		for i := range beforeControllers {

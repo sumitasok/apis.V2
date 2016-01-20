@@ -8,6 +8,7 @@ import (
 
 	"encoding/gob"
 	"encoding/json"
+
 	"github.com/julienschmidt/httprouter"
 	"gopkg.in/mgo.v2"
 )
@@ -19,6 +20,7 @@ type D struct {
 	actions []action
 
 	req       *http.Request
+	rw        http.ResponseWriter
 	body      []byte
 	urlParams httprouter.Params
 }
@@ -44,6 +46,7 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 
 	d.urlParams = params
 	d.req = req
+	d.rw = rw
 
 	var resp interface{}
 	var err error
@@ -96,6 +99,10 @@ func (d *D) QueryParam(key string) string {
 
 func (d *D) Request() *http.Request {
 	return d.req
+}
+
+func (d *D) ResponseWriter() http.ResponseWriter {
+	return d.rw
 }
 
 func (d *D) Body(i interface{}) error {

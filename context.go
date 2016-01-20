@@ -65,6 +65,9 @@ func (c *context) attachRoutes() {
 		case "DELETE":
 			c.router.DELETE(_routes[i].url, d.call)
 			break
+		case "OPTIONS":
+			c.router.OPTIONS(_routes[i].url, d.call)
+			break
 		default:
 			break
 		}
