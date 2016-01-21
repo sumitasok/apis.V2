@@ -117,7 +117,7 @@ func (d *D) ResponseWriter() http.ResponseWriter {
 func (d *D) Body(i interface{}) error {
 	body := d.body
 	if body == nil {
-		d.LogInfo("Cannot convert Request body to byte array", err.Error())
+		d.LogInfo("body is empty")
 	}
 
 	err = json.Unmarshal(body, &i)
