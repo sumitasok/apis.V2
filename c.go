@@ -11,6 +11,7 @@ import (
 func Init() *C {
 	c := &C{&context{}}
 	c.setLogger()
+	c.context.logRequest = false
 
 	c.routes = &routes{}
 
