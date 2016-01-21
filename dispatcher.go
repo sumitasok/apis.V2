@@ -120,7 +120,7 @@ func (d *D) Body(i interface{}) error {
 		d.LogInfo("body is empty")
 	}
 
-	err = json.Unmarshal(body, &i)
+	err := json.Unmarshal(body, &i)
 	if err != nil {
 		d.LogInfo("data couldn't be marshalled", err.Error())
 	}
