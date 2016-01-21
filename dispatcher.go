@@ -51,6 +51,11 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 	d.req = req
 	d.rw = rw
 
+	if req.Method == "POST" || req.Method == "PUT" {
+		body, _ := d.reqToByteArray()
+		d.body = body
+	}
+
 	var resp interface{}
 	var err error
 	var status int
@@ -110,7 +115,7 @@ func (d *D) ResponseWriter() http.ResponseWriter {
 }
 
 func (d *D) Body(i interface{}) error {
-	body, err := d.reqToByteArray()
+	body = d.body
 	if err != nil {
 		d.LogInfo("Cannot convert Request body to byte array", err.Error())
 	}
