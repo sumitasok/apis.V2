@@ -22,6 +22,10 @@ type C struct {
 	*context
 }
 
+func (c *C) LogRequest(status bool) {
+	c.context.logRequest = status
+}
+
 func (c *C) NewDispatcher() *D {
 	return &D{c: c.context}
 }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"encoding/json"
 
@@ -45,6 +46,13 @@ func (d *D) DbQuery(dbQuery func(DB, error) error) error {
 }
 
 func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Params) {
+	var receivedAt, respondedAt time.Time
+	var actualBody []byte
+
+	if d.c.logRequest {
+		receivedAt = time.Now()
+	}
+
 	req.Close = true
 
 	d.urlParams = params
@@ -54,6 +62,7 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 	if req.Method == "POST" || req.Method == "PUT" {
 		body, _ := d.reqToByteArray()
 		d.body = body
+		actualBody = body
 	}
 
 	var resp interface{}
@@ -75,6 +84,13 @@ func (d D) call(rw http.ResponseWriter, req *http.Request, params httprouter.Par
 	}
 
 	d.Write(rw, resp, err, status)
+
+	if d.c.logRequest {
+		respondedAt = time.Now()
+		timeTaken := respondedAt.Sub(receivedAt)
+		d.LogInfo("Req: ", timeTaken.Seconds(), "sec", req.Method, req.Host, req.URL, string(actualBody), req.Referer(), "Resp", string(d.body))
+	}
+
 	return
 }
 

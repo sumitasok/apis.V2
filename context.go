@@ -20,6 +20,8 @@ type context struct {
 
 	routes *routes
 	router *httprouter.Router
+
+	logRequest bool
 }
 
 type routes []*route
