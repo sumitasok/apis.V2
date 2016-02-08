@@ -29,6 +29,10 @@ func (c *C) ConfigHttpResp(resp *http.Response, err error) *C {
 
 	c.ConfigBytes(data)
 
+	if resp.Body != nil {
+		defer resp.Body.Close()
+	}
+
 	return c
 }
 
