@@ -23,6 +23,16 @@ type D struct {
 	rw        http.ResponseWriter
 	body      []byte
 	urlParams httprouter.Params
+	data      map[string]interface{}
+}
+
+func (d *D) SetData(key string, val interface{}) {
+	d.data[key] = val
+}
+
+func (d *D) GetData(key string) (interface{}, bool) {
+	val, ok := d.data[key]
+	return val, ok
 }
 
 func (d *D) BodyByte() []byte {

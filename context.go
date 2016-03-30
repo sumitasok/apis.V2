@@ -53,7 +53,7 @@ func (c *context) attachRoutes() {
 	_routes := *c.routes
 	for i := range _routes {
 		// Individual Controller calls per routes are expected to happen from here
-		d := D{c: c, actions: _routes[i].actions}
+		d := D{c: c, actions: _routes[i].actions, data: make(map[string]interface{})}
 		switch _routes[i].method {
 		case "GET":
 			c.router.GET(_routes[i].url, d.call)
