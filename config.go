@@ -72,18 +72,31 @@ func (c *C) Root(nodes ...string) *C {
 }
 
 type Config struct {
-	data *simplejson.Json
+	allowFallback bool
+	data          *simplejson.Json
+}
+
+func (c *Config) AllowFallback(status bool) {
+	c.allowFallback = status
 }
 
 func (c *Config) Array(path string, fallback []interface{}) []interface{} {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Array()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -92,12 +105,20 @@ func (c *Config) Array(path string, fallback []interface{}) []interface{} {
 func (c *Config) Bool(path string, fallback bool) bool {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Bool()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -106,12 +127,20 @@ func (c *Config) Bool(path string, fallback bool) bool {
 func (c *Config) Bytes(path string, fallback []byte) []byte {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Bytes()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -120,12 +149,20 @@ func (c *Config) Bytes(path string, fallback []byte) []byte {
 func (c *Config) Float(path string, fallback float64) float64 {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Float64()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -134,12 +171,20 @@ func (c *Config) Float(path string, fallback float64) float64 {
 func (c *Config) String(path string, fallback string) string {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.String()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -172,12 +217,20 @@ func nextConfigNode(keys []string, node *simplejson.Json) (*simplejson.Json, boo
 func (c *Config) Int(path string, fallback int) int {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Int()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -186,12 +239,20 @@ func (c *Config) Int(path string, fallback int) int {
 func (c *Config) Int64(path string, fallback int64) int64 {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Int64()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -200,7 +261,11 @@ func (c *Config) Int64(path string, fallback int64) int64 {
 func (c *Config) Interface(path string, fallback interface{}) interface{} {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val := node.Interface()
@@ -210,12 +275,20 @@ func (c *Config) Interface(path string, fallback interface{}) interface{} {
 func (c *Config) Map(path string, fallback map[string]interface{}) map[string]interface{} {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Map()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -224,12 +297,20 @@ func (c *Config) Map(path string, fallback map[string]interface{}) map[string]in
 func (c *Config) StringArray(path string, fallback []string) []string {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.StringArray()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
@@ -238,12 +319,20 @@ func (c *Config) StringArray(path string, fallback []string) []string {
 func (c *Config) Uint64(path string, fallback uint64) uint64 {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	val, err := node.Uint64()
 	if err != nil {
-		return fallback
+		if c.allowFallback {
+			return fallback
+		} else {
+			panic("config " + path + " not found")
+		}
 	}
 
 	return val
