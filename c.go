@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+// Init
+// Init() -> returns the context on which the whole app is going to be built on
 func Init() *C {
 	c := &C{&context{}}
 	c.setLogger()
