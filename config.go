@@ -18,7 +18,7 @@ func (c *C) Config() *Config {
 	return c.context.appConfig
 }
 
-// ConfigHttpRouter gets the config from an http server which returns a json formated config data.
+// ConfigHttpResp gets the config from an http server which returns a json formated config data.
 func (c *C) ConfigHttpResp(resp *http.Response, err error) *C {
 	if err != nil {
 		c.infoLog.Fatal(err)
@@ -52,7 +52,7 @@ func (c *C) ConfigFile(filepath string) *C {
 	return c
 }
 
-// ConfigByte returns the config from Int data
+// ConfigBytes returns the config from Int data
 func (c *C) ConfigBytes(data []byte) *C {
 	j, err := simplejson.NewJson(data)
 	if err != nil {
@@ -83,13 +83,13 @@ type Config struct {
 	data          *simplejson.Json
 }
 
-// AllowConfig is set to true takes the fallback value passed as second paramter if the input config doesnot have the value
+// AllowFallback is set to true takes the fallback value passed as second paramter if the input config doesnot have the value
 // if this is set, you might forget adding config to your config file or server.
 func (c *Config) AllowFallback(status bool) {
 	c.allowFallback = status
 }
 
-// Bytes returns the value if it is an array
+// Array returns the value if it is an array
 func (c *Config) Array(path string, fallback []interface{}) []interface{} {
 	node, ok := lastConfigNode(path, *c.data)
 	if !ok {
@@ -213,9 +213,9 @@ func nextConfigNode(keys []string, node *simplejson.Json) (*simplejson.Json, boo
 
 	if node, ok := node.CheckGet(keys[0]); ok {
 		return nextConfigNode(keys[1:], node)
-	} else {
-		return nil, false
 	}
+
+	return nil, false
 }
 
 // Int returns the value if it is a Int
