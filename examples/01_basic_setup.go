@@ -7,10 +7,10 @@ import (
 type DummyController struct {
 }
 
-func main() {
-	c := apis.Init()
+func (d DummyController) Config() *apis.Config {
+	return &apis.Config{}
+}
 
-	c.Get("/urls").Set(DummyController{})
-
-	c.Listen(7000)
+func (d DummyController) Call(dispatcher *apis.D) (interface{}, error, int) {
+	return nil, nil, 200
 }

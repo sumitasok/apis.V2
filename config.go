@@ -85,18 +85,16 @@ func (c *Config) Array(path string, fallback []interface{}) []interface{} {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Array()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -107,18 +105,16 @@ func (c *Config) Bool(path string, fallback bool) bool {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Bool()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -129,18 +125,16 @@ func (c *Config) Bytes(path string, fallback []byte) []byte {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Bytes()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -151,18 +145,16 @@ func (c *Config) Float(path string, fallback float64) float64 {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Float64()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -173,18 +165,16 @@ func (c *Config) String(path string, fallback string) string {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.String()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -219,18 +209,16 @@ func (c *Config) Int(path string, fallback int) int {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Int()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -241,18 +229,16 @@ func (c *Config) Int64(path string, fallback int64) int64 {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Int64()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -263,9 +249,8 @@ func (c *Config) Interface(path string, fallback interface{}) interface{} {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val := node.Interface()
@@ -277,18 +262,16 @@ func (c *Config) Map(path string, fallback map[string]interface{}) map[string]in
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Map()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -299,18 +282,16 @@ func (c *Config) StringArray(path string, fallback []string) []string {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.StringArray()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val
@@ -321,18 +302,16 @@ func (c *Config) Uint64(path string, fallback uint64) uint64 {
 	if !ok {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	val, err := node.Uint64()
 	if err != nil {
 		if c.allowFallback {
 			return fallback
-		} else {
-			panic("config " + path + " not found")
 		}
+		panic("config " + path + " not found")
 	}
 
 	return val

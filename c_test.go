@@ -1,10 +1,19 @@
 package apis
 
-import (
-	"fmt"
-)
+import ()
 
-func ExampleInit() {
+type DummyController struct {
+}
+
+func (d DummyController) Config() *Config {
+	return &Config{}
+}
+
+func (d DummyController) Call(dispatcher *D) (interface{}, error, int) {
+	return nil, nil, 200
+}
+
+func PendingExampleInit() {
 	c := Init()
 
 	c.Get("/urls").Set(DummyController{})

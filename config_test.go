@@ -25,6 +25,7 @@ func TestConfigInit(t *testing.T) {
 
 	c := Init()
 	c.ConfigBytes([]byte(`{"apis": {"dev": {"name": "Sumit", "dob": {"month": "nov", "date": 26}}}}`))
+	c.Config().AllowFallback(true)
 
 	_, ok := c.context.appConfig.data.CheckGet("apis")
 
@@ -56,7 +57,7 @@ func TestConfigInit(t *testing.T) {
 
 	valDate := c.context.appConfig.Int64("dob.date", 25)
 
-	assert.Equal(26, valDate)
+	assert.EqualValues(26, valDate)
 
 	assert.True(true)
 }
@@ -67,6 +68,7 @@ func TestConfigFile(t *testing.T) {
 	c := Init()
 
 	c.ConfigFile("./samples/config.json")
+	c.Config().AllowFallback(true)
 
 	_, ok := c.context.appConfig.data.CheckGet("apis")
 
@@ -98,7 +100,7 @@ func TestConfigFile(t *testing.T) {
 
 	valDate := c.context.appConfig.Int64("dob.date", 25)
 
-	assert.Equal(26, valDate)
+	assert.EqualValues(26, valDate)
 
 	assert.True(true)
 }
